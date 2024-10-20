@@ -8,7 +8,7 @@ const navigation = [
   { name: 'Laporin Rek', href: '#' },
   { name: 'Beranda', href: '#' },
   { name: 'Chatbot', href: '#' },
-  { name: 'Riwauat', href: '#' },
+  { name: 'Riwayat', href: '#' },
 ]
 
 export default function Navbar() {
@@ -17,6 +17,7 @@ export default function Navbar() {
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
+        {/* Logo */}
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">SI NGALAM</span>
@@ -27,6 +28,22 @@ export default function Navbar() {
             />
           </a>
         </div>
+
+        {/* Navigation + Log In */}
+        <div className="hidden lg:flex lg:gap-x-8 lg:flex-grow lg:justify-end lg:items-center">
+          {navigation.map((item) => (
+            <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
+              {item.name}
+            </a>
+          ))}
+          {/* Log in button */}
+          <a href="#"
+            className="text-sm font-semibold leading-6 text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-md">
+            Log in <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+
+        {/* Mobile Menu */}
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -37,19 +54,9 @@ export default function Navbar() {
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item) => (
-            <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
-              {item.name}
-            </a>
-          ))}
-        </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <button href="#" className="text-sm font-semibold leading-6 text-white bg-indigo-600 hover:bg-indigo-500">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </button>
-        </div>
       </nav>
+
+      {/* Mobile View Menu */}
       <Dialog as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <DialogPanel focus="true" className="fixed inset-0 z-50 overflow-y-auto bg-white px-6 py-6 lg:hidden">
           <div className="flex items-center justify-between">
