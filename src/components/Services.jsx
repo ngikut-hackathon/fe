@@ -6,7 +6,7 @@ export default function Services() {
     return (
         <div className="flex flex-wrap justify-center items-center gap-8 mx-auto max-w-7xl px-6 sm:py-8 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-16">
             <div className="px-6">
-                <p className="mx-auto px-6">
+                <p className="mx-auto px-12">
                     LAYANAN TERBAIK
                 </p>
             </div>

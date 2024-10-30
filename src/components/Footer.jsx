@@ -4,9 +4,9 @@ import React from 'react';
 
 export default function Footer() {
     return (
-        <footer className="bg-gray-700 w-full mt-auto bottom-0">
+        <footer className="bg-gray-700 w-full mt-auto bottom-0 flex flex-col items-center">
             <h2 id="footer-heading" className="sr-only">Footer</h2>
-            <div className="w-full px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+            <div className="w-full px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32 max-w-screen-xl">
                 <div className="xl:grid xl:grid-cols-3 xl:gap-8">
                     <img className="h-10 w-auto" src="public/images/logo2.png" />
                     <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">

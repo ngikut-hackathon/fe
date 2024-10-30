@@ -47,7 +47,7 @@ export default function Navbar({ user }) {
               Logout
             </button>
           ) : (
-            <a href="/login" className="text-sm font-semibold leading-6 text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-md">
+            <a href="/login" className="text-sm font-semibold leading-6 text-white bg-gray-900 hover:bg-gray-800 px-4 py-2 rounded-md">
               Log in <span aria-hidden="true">&rarr;</span>
             </a>
           )}

@@ -29,8 +29,8 @@ export default function SignUp() {
   };
 
   return (
-    <div className="h-full w-full bg-gray-100">
-      <div className="flex items-center lg:-mr-[28rem]">
+    <div className="bg-gray-100">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
           <h2 className="text-2xl font-bold mb-6 text-gray-800 text-left">Daftar</h2>
           <form className="text-left" onSubmit={handleEmailSignUp}>
