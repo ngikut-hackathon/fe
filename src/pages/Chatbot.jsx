@@ -101,7 +101,7 @@ function Chatbot() {
   return (
     <div className="flex flex-col h-screen bg-gray-100">
       <Navbar />
-      <main className="flex-1 overflow-hidden pt-20">
+      <main className="flex-1 overflow-hidden pt-20 px-56">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col">
           <div className="flex-1 overflow-y-auto py-6 space-y-4 px-4">
             {messages.map((message, index) => (
