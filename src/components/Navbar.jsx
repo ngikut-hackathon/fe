@@ -51,7 +51,7 @@ export default function Navbar({ user }) {
               Keluar
             </button>
           ) : (
-            <a href="/login" className="text-sm font-semibold leading-6 text-white bg-biruNgalam hover:bg-gray-800 px-4 py-2 rounded-md">
+            <a href="/login" className="text-sm font-semibold leading-6 text-white bg-biruNgalam hover:text-white hover:bg-gray-800 px-4 py-2 rounded-md">
               Masuk <span aria-hidden="true">&rarr;</span>
             </a>
           )}

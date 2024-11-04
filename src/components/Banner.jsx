@@ -18,7 +18,7 @@ export default function Banner() {
                     </p>
                     <div className="mt-6 flex items-center gap-x-6">
                         <a
-                            href="#"
+                            href="/chabot"
                             className="rounded-md bg-biruNgalam px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:text-white hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Chat MalangBot
