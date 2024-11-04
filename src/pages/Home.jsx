@@ -34,7 +34,6 @@ function Home() {
 
   return (
     <>
-      <Navbar />
       <Hero />
       <Features />
       <Banner />

@@ -2,31 +2,33 @@ import React, { useEffect, useState } from "react";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         // Retrieve the token from localStorage
-        const idToken = localStorage.getItem("idToken");
+        const idToken = localStorage.getItem("userToken");
 
         if (!idToken) {
-          console.error("No token found in localStorage");
+          setError("No token found. Please log in again.");
           return;
         }
 
         const response = await fetch("http://localhost:3000/users", {
           headers: {
-            Authorization: `${idToken}`,
+            Authorization: `Bearer ${idToken}`, // Use Bearer format for token
           },
         });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch users");
+          throw new Error("Failed to fetch users. Please check your authorization.");
         }
 
         const data = await response.json();
         setUsers(data.users);
       } catch (error) {
+        setError("Error fetching users: " + error.message);
         console.error("Error fetching users:", error);
       }
     };
@@ -37,7 +39,9 @@ export default function Users() {
   return (
     <div>
       <h1>Users</h1>
-      {users.length > 0 ? (
+      {error ? (
+        <p>{error}</p>
+      ) : users.length > 0 ? (
         <ul>
           {users.map((user) => (
             <li key={user.id}>

@@ -29,13 +29,11 @@ const Lapor = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center pt-20">
-      <Navbar />
-
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center pt-16 px-4">
       {isSubmitted ? (
         <Terkirim />
       ) : (
-        <div className="container mx-auto mt-10 p-10 bg-white rounded-2xl shadow-lg w-full max-w-4xl">
+        <div className="container mt-10 p-10 bg-white rounded-2xl shadow-lg w-full max-w-xl md:max-w-2xl lg:max-w-4xl">
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-6">
               {/* Form Fields Container */}
@@ -66,7 +64,7 @@ const Lapor = () => {
                 </div>
 
                 {/* Right Column */}
-                <div className="flex flex-col w-full md:w-1/2">
+                <div className="flex flex-col w-full md:w-1/2 mt-4 sm:mt-0">
                   <label htmlFor="deskripsiLaporan" className="text-lg font-semibold">Deskripsi Laporan</label>
                   <textarea
                     id="deskripsiLaporan"

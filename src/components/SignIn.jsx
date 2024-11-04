@@ -30,9 +30,13 @@ export default function SignIn() {
   };
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 h-screen" style={{
+      backgroundImage: "url('/images/SignIn.svg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}>
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+        <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md lg:ml-[36rem] mt-24 sm:mt-0">
           <h2 className="text-2xl font-bold mb-6 text-gray-800 text-left">
             Login
           </h2>
@@ -48,7 +52,7 @@ export default function SignIn() {
               <input
                 type="text"
                 id="emailOrPhone"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-biruNgalam"
                 placeholder="Email atau Nomor HP"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -65,7 +69,7 @@ export default function SignIn() {
               <input
                 type="password"
                 id="password"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-biruNgalam"
                 placeholder="Kata Kunci"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -74,7 +78,7 @@ export default function SignIn() {
 
             <button
               type="submit"
-              className="w-full bg-black text-white py-2 rounded-lg font-semibold hover:bg-gray-800 transition duration-200"
+              className="w-full bg-biruNgalam text-white py-2 rounded-lg font-semibold hover:bg-gray-800 transition duration-200"
             >
               Masuk
             </button>

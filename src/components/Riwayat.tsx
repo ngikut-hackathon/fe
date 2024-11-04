@@ -26,7 +26,6 @@ const Riwayat = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center pt-20">
-      <Navbar />
       <div className="card bg-white shadow-lg rounded-2xl m-4 w-full max-w-6xl mt-10">
         <div className="card-body p-6">
           <h1 className="text-2xl font-bold text-left text-gray-800 mb-6">Riwayat Pelaporan</h1>

@@ -1,54 +1,46 @@
-"use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
-import Navbar from "../components/Navbar";
+import { FaPaperPlane } from "react-icons/fa";
 
-function Chatbot() {
-  const [messages, setMessages] = useState([
-    { role: "assistant", content: "Halo rek! NgalamBot siap membantu disini" },
-  ]);
+const Chatbot = () => {
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [loadingDots, setLoadingDots] = useState(""); // State for loading dots animation
-  const [isWaiting, setIsWaiting] = useState(false); // State to track waiting status
+  const [loadingDots, setLoadingDots] = useState("");
+  const [isWaiting, setIsWaiting] = useState(false);
 
-  // Reference to the container that holds the messages
   const messagesEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
 
-  // Function to parse and sanitize Markdown content
   const parseMarkdown = (content) => {
-    const htmlContent = marked.parse(content); // Parse Markdown to HTML
-    return { __html: DOMPurify.sanitize(htmlContent) }; // Sanitize the HTML
+    const htmlContent = marked.parse(content);
+    return { __html: DOMPurify.sanitize(htmlContent) };
   };
 
-  // Scroll to bottom of chat whenever messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Effect to handle loading dots animation
   useEffect(() => {
     if (isWaiting) {
       const interval = setInterval(() => {
-        setLoadingDots((prev) => (prev.length < 3 ? prev + "." : "")); // Append dots up to 3
-      }, 500); // Update every 0.5 seconds
+        setLoadingDots((prev) => (prev.length < 3 ? prev + "." : ""));
+      }, 500);
       return () => clearInterval(interval);
     } else {
-      setLoadingDots(""); // Reset dots when no longer waiting
+      setLoadingDots("");
     }
   }, [isWaiting]);
 
-  const handleSend = async () => {
-    if (input.trim()) {
-      const userMessage = { role: "user", content: input };
+  const handleSend = async (message = input) => {
+    if (message.trim()) {
+      const userMessage = { role: "user", content: message };
       setMessages((prev) => [...prev, userMessage]);
       setInput("");
 
-      // Add an assistant message with initial "Sek yo" content
       const assistantMessage = { role: "assistant", content: "Sek yo" };
       setMessages((prev) => [...prev, assistantMessage]);
-      setIsWaiting(true); // Set waiting state to true to start loading dots animation
+      setIsWaiting(true);
 
       try {
         const response = await fetch(
@@ -59,8 +51,8 @@ function Chatbot() {
               Authorization: `Bearer ${import.meta.env.VITE_SECRET_KEY}`,
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ message: input }),
-            signal: AbortSignal.timeout(60000), // 60 second timeout
+            body: JSON.stringify({ message }),
+            signal: AbortSignal.timeout(60000),
           }
         );
 
@@ -75,14 +67,13 @@ function Chatbot() {
           const chunk = decoder.decode(value, { stream: true });
           accumulatedContent += chunk;
 
-          // Update the last message (assistant) incrementally with streamed content
           setMessages((prev) => {
             const newMessages = [...prev];
             newMessages[newMessages.length - 1].content = accumulatedContent;
             return newMessages;
           });
 
-          setIsWaiting(false); // Stop waiting once the response starts streaming
+          setIsWaiting(false);
         }
       } catch (error) {
         console.error(error);
@@ -93,89 +84,115 @@ function Chatbot() {
             content: "Sorry, there was an error processing your request.",
           },
         ]);
-        setIsWaiting(false); // Ensure loading state is turned off on error
+        setIsWaiting(false);
       }
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const quickActions = [
+    "Cara membuat KTP",
+    "Cara membuat SIM",
+    "Cara membuat Paspor",
+    "Cara mendaftar BPJS",
+    "Cara membuat KK baru"
+  ];
+
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <Navbar />
-      <main className="flex-1 overflow-hidden pt-20 px-56">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col">
-          <div className="flex-1 overflow-y-auto py-6 space-y-4 px-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${
-                  message.role === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
-                <div
-                  className={`max-w-sm rounded-lg p-4 text-sm ${
-                    message.role === "user"
-                      ? "bg-blue-500 text-white"
-                      : "bg-white text-gray-800 shadow-md"
-                  }`}
-                >
-                  {message.role === "user" ? (
-                    message.content
-                  ) : (
-                    <div
-                      dangerouslySetInnerHTML={parseMarkdown(
-                        // Show "Sek yo..." with dots if still waiting, otherwise show content
-                        isWaiting && index === messages.length - 1
-                          ? `Sek yo${loadingDots}`
-                          : message.content
-                      )}
-                      className="prose prose-sm max-w-none text-left" // Tailwind prose styling
-                    />
-                  )}
-                </div>
+    <div className="flex flex-col h-screen bg-white">
+      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full px-4">
+        {messages.length === 0 ? (
+          // Initial view when no messages
+          <div className="flex-1 flex flex-col items-center justify-center">
+            {/* Updated header with horizontally aligned icon and text */}
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <img src="/images/chatbot.png" alt="Chatbot Icon" className="w-16 h-16" />
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">Ada yang bisa dibantu?</h1>
+            </div>
+            
+            <div className="w-full max-w-xl">
+              <div className="flex items-center bg-gray-100 rounded-full p-3 mb-6">
+                <input
+                  type="text"
+                  placeholder="Tanya MalangBot"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="flex-grow bg-transparent outline-none text-gray-800 px-4"
+                />
+                <button onClick={() => handleSend()} className="text-gray-400 hover:text-gray-600">
+                  <FaPaperPlane className="text-xl" />
+                </button>
               </div>
-            ))}
-            {/* Empty div used as a reference to scroll into view */}
-            <div ref={messagesEndRef} />
+
+              <div className="flex flex-wrap justify-center gap-2">
+                {quickActions.map((action, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleSend(action)}
+                    className="px-4 py-2 rounded-full border border-gray-200 bg-white text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2"
+                  >
+                    <span className="text-black">✦</span>
+                    <span>{action}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="py-4 px-4">
-            <div className="flex space-x-3">
+        ) : (
+          // Chat view when there are messages
+          <div className="flex-1 flex flex-col pt-4 mt-20">
+            <div className="flex-1 overflow-y-auto" ref={chatContainerRef}>
+              {messages.map((message, index) => (
+                <div key={index} className={`flex w-full ${message.role === "user" ? "justify-end" : "justify-start"} mb-4`}>
+                  <div className={`max-w-xs md:max-w-lg rounded-lg p-4 ${
+                    message.role === "user" 
+                      ? "bg-blue-600 text-white rounded-br-none" 
+                      : "bg-gray-100 text-gray-800 rounded-bl-none"
+                  }`}>
+                    <span dangerouslySetInnerHTML={parseMarkdown(message.content)} />
+                  </div>
+                </div>
+              ))}
+              {isWaiting && (
+                <div className="flex w-full justify-start mb-4">
+                  <div className="max-w-xs md:max-w-lg rounded-lg p-4 bg-gray-100 text-gray-800 rounded-bl-none">
+                    Lagi ngetik{loadingDots}
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+          </div>
+        )}
+
+        {/* Input field always at bottom when there are messages */}
+        {messages.length > 0 && (
+          <div className="sticky bottom-0 bg-white py-4">
+            <div className="flex items-center bg-gray-100 rounded-full p-3">
               <input
                 type="text"
+                placeholder="Tanya MalangBot"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
-                  }
-                }}
-                placeholder="Type your message..."
-                className="flex-1 rounded-lg border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 px-4 py-2 text-sm"
+                onKeyDown={handleKeyDown}
+                className="flex-grow bg-transparent outline-none text-gray-800 px-4"
               />
-              <button
-                onClick={handleSend}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 mr-2"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Send
+              <button onClick={() => handleSend()} className="text-gray-400 hover:text-gray-600">
+                <FaPaperPlane className="text-xl" />
               </button>
             </div>
           </div>
-        </div>
-      </main>
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default Chatbot;

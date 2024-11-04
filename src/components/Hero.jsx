@@ -5,7 +5,7 @@ import { ChevronRightIcon } from '@heroicons/react/20/solid'
 export default function Hero() {
   return (
     <div className="bg-white">
-      <div className="relative isolate pt-14">
+      <div className="relative isolate pt-14 sm:p-10">
         <svg
           aria-hidden="true"
           className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
@@ -40,8 +40,8 @@ export default function Hero() {
             </p>
             <div className="mt-6 flex items-center gap-x-6">
               <a
-                href="#"
-                className="rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                href="/lapor"
+                className="rounded-md bg-biruNgalam px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-biruNgalam"
               >
                 Laporin Rek
               </a>
